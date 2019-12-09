@@ -10,15 +10,16 @@ object B_Bb : BuildType({
         feature {
             id = "KEEP_RULE_2"
             type = "keepRules"
-            param("filters.2.type", "tags")
             param("limit.type", "all")
-            param("filters.2.tagsList", """
+            param("keepData.1.artifactPatterns", "+:**/*")
+            param("keepData.1.type", "artifacts")
+            param("ruleDisabled", "false")
+            param("filters.1.type", "tags")
+            param("partitions.1.type", "perBranch")
+            param("filters.1.tagsList", """
                 b2
                 over
             """.trimIndent())
-            param("ruleDisabled", "false")
-            param("keepData.3.type", "everything")
-            param("partitions.1.type", "perBranch")
             param("preserveArtifacts", "true")
         }
     }
