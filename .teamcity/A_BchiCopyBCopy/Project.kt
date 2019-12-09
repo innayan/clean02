@@ -10,21 +10,38 @@ object Project : Project({
     name = "Bchi_copyB_copy"
     description = "d"
 
-    cleanup {
-        keepRule {
+    features {
+        feature {
             id = "KEEP_RULE_10"
-            keepAtLeast = allBuilds()
-            applyToBuilds {
-                withTags = anyOf("b1", "overriden")
-            }
-            dataToKeep = everything()
-            applyPerEachBranch = true
-            preserveArtifactsDependencies = true
+            type = "keepRules"
+            param("filters.2.type", "tags")
+            param("limit.type", "all")
+            param("filters.2.tagsList", """
+                b1
+                overriden
+            """.trimIndent())
+            param("ruleDisabled", "false")
+            param("keepData.3.type", "everything")
+            param("partitions.1.type", "perBranch")
+            param("preserveArtifacts", "true")
         }
-        keepRule {
-            disabled = true
+        feature {
             id = "KEEP_RULE_11"
-            keepAtLeast = allBuilds()
+            type = "keepRules"
+            param("limit.type", "all")
+            param("ruleDisabled", "true")
+            param("preserveArtifacts", "false")
+        }
+        feature {
+            id = "KEEP_RULE_3"
+            type = "keepRules"
+            param("limit.type", "all")
+            param("keepData.1.type", "everything")
+            param("ruleDisabled", "false")
+            param("filters.1.type", "tags")
+            param("partitions.1.type", "perBranch")
+            param("filters.1.tagsList", "new")
+            param("preserveArtifacts", "true")
         }
     }
 })
