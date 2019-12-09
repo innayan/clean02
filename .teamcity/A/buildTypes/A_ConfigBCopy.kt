@@ -8,31 +8,38 @@ object A_ConfigBCopy : BuildType({
 
     artifactRules = "a"
 
-    cleanup {
-        keepRule {
+    features {
+        feature {
             id = "KEEP_RULE_4"
-            keepAtLeast = allBuilds()
-            applyToBuilds {
-                withTags = anyOf("b1", "configB1")
-            }
-            dataToKeep = everything()
-            applyPerEachBranch = true
-            preserveArtifactsDependencies = true
+            type = "keepRules"
+            param("filters.2.type", "tags")
+            param("limit.type", "all")
+            param("filters.2.tagsList", """
+                b1
+                configB1
+            """.trimIndent())
+            param("ruleDisabled", "false")
+            param("keepData.3.type", "everything")
+            param("partitions.1.type", "perBranch")
+            param("preserveArtifacts", "true")
         }
-        keepRule {
-            disabled = true
+        feature {
             id = "KEEP_RULE_5"
-            keepAtLeast = allBuilds()
+            type = "keepRules"
+            param("limit.type", "all")
+            param("ruleDisabled", "true")
+            param("preserveArtifacts", "false")
         }
-        keepRule {
+        feature {
             id = "KEEP_RULE_6"
-            keepAtLeast = allBuilds()
-            applyToBuilds {
-                withTags = anyOf("configB_own")
-            }
-            dataToKeep = everything()
-            applyPerEachBranch = true
-            preserveArtifactsDependencies = true
+            type = "keepRules"
+            param("filters.2.type", "tags")
+            param("limit.type", "all")
+            param("filters.2.tagsList", "configB_own")
+            param("ruleDisabled", "false")
+            param("keepData.3.type", "everything")
+            param("partitions.1.type", "perBranch")
+            param("preserveArtifacts", "true")
         }
     }
 })

@@ -20,6 +20,33 @@ object Project : Project({
     buildType(B_Bb)
 
     features {
+        feature {
+            id = "KEEP_RULE_4"
+            type = "keepRules"
+            param("limit.type", "all")
+            param("keepData.1.artifactPatterns", "+:**/*")
+            param("keepData.1.type", "artifacts")
+            param("ruleDisabled", "false")
+            param("filters.1.type", "tags")
+            param("partitions.1.type", "perBranch")
+            param("filters.1.tagsList", """
+                a1
+                gg
+                test
+            """.trimIndent())
+            param("preserveArtifacts", "true")
+        }
+        feature {
+            id = "KEEP_RULE_5"
+            type = "keepRules"
+            param("filters.2.type", "tags")
+            param("limit.type", "all")
+            param("filters.2.tagsList", "a2")
+            param("ruleDisabled", "false")
+            param("keepData.3.type", "everything")
+            param("partitions.1.type", "perBranch")
+            param("preserveArtifacts", "true")
+        }
         versionedSettings {
             id = "PROJECT_EXT_2"
             mode = VersionedSettings.Mode.ENABLED
@@ -32,26 +59,6 @@ object Project : Project({
     }
 
     cleanup {
-        keepRule {
-            id = "KEEP_RULE_4"
-            keepAtLeast = allBuilds()
-            applyToBuilds {
-                withTags = anyOf("a1", "gg", "test")
-            }
-            dataToKeep = everything()
-            applyPerEachBranch = true
-            preserveArtifactsDependencies = true
-        }
-        keepRule {
-            id = "KEEP_RULE_5"
-            keepAtLeast = allBuilds()
-            applyToBuilds {
-                withTags = anyOf("a2")
-            }
-            dataToKeep = everything()
-            applyPerEachBranch = true
-            preserveArtifactsDependencies = true
-        }
         baseRule {
             all(builds = 123)
             history(builds = 123)
